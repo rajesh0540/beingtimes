@@ -7,6 +7,8 @@ import SEOYoast from "@/common/components/SEOYoast";
 //
 import Wordpress from "@/services/Wordpress";
 
+const hostedUrl = process.env.HOSTED_URL || "";
+
 type WebStoryProps = {
   webStory: any;
   site_icon: any;
@@ -51,17 +53,49 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { site_icon } = await Wordpress.getSiteData();
     const webStory = await Wordpress.getWebStoryBySlug(slug);
 
+    if (webStory.featured_media) {
+      const featuredMedia = await Wordpress.getMediaById(
+        webStory.featured_media
+      );
+
+      const nodes = webStory.yoast_head_json.schema["@graph"];
+      const mediaId = `${hostedUrl}/web-stories/${webStory.slug}#primaryimage`;
+
+      nodes.forEach((node: any) => {
+        const nodeType = node["@type"];
+        if (["Article", "WebPage"].includes(nodeType)) {
+          node.thumbnailUrl = featuredMedia.full.src;
+          node.image = {
+            "@id": mediaId,
+          };
+        }
+
+        if (nodeType === "WebPage") {
+          node.primaryImageOfPage = {
+            "@id": mediaId,
+          };
+        }
+      });
+
+      nodes.push({
+        "@type": "ImageObject",
+        inLanguage: "en-US",
+        "@id": mediaId,
+        url: featuredMedia.full.src,
+        contentUrl: featuredMedia.full.src,
+        width: featuredMedia.full.width,
+        height: featuredMedia.full.height,
+        caption: featuredMedia.caption,
+      });
+    }
+
     if (!webStory) {
       throw new Error();
     }
 
     return {
       props: {
-        webStory: {
-          link: webStory.link,
-          yoast_head_json: webStory.yoast_head_json,
-          slug: webStory.slug,
-        },
+        webStory,
         site_icon,
       },
     };

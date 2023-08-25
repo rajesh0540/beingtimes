@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./richtext.scss";
+@import "./fonts.scss";
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tag {
+  transform: skewX(-15deg);
+}
+
+.ellipsis {
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+}
+.ellipsis-3 {
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.oswald {
+  font-family: "Oswald", Arial, Helvetica, sans-serif;
+}
+
+@media (max-width: 1023px) {
+  .dropdown-position {
+    left: 0px !important;
+    right: 0px !important;
+  }
+}
