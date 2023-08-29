@@ -79,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({ siteData, headerMenu }) => {
                   <h1 className="hidden">{siteData.name}</h1>
                   <img
                     className="h-[26px] lg:h-[34px] block"
-                    src="https://wp.timesin.com/wp-content/uploads/2023/08/Timesin.webp"
+                    src="https://wp.beingtimes.com/wp-content/uploads/2023/08/BeingTimes.webp"
                     alt={siteData?.name}
                   />
                 </Link>
@@ -102,7 +102,7 @@ const Header: React.FC<HeaderProps> = ({ siteData, headerMenu }) => {
 
             <div>
               <a
-                href={`https://timesin.com/page/write-for-us`}
+                href={`https://beingtimes.com/page/write-for-us`}
                 target="__blank"
                 rel="noreferrer"
               >
